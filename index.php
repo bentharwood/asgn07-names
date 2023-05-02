@@ -1,40 +1,14 @@
 <?php
+include "functions/names-functions.php";
 include 'functions/utility-functions.php';
 $fileName = 'names-short-list.txt';
 
-$lineNumber = 0;
 
-// Load up the array
-$FH = fopen("$fileName", "r");
-$nextName = fgets($FH);
+$fullNames = loadFullNames($fileName);
 
-while(!feof($FH)) {
-    if($lineNumber % 2 == 0) {
-        $fullNames[] = trim(substr($nextName, 0, strpos($nextName, " --")));
-    }
+$firstNames = loadFirstNames($fullNames);
 
-$lineNumber++;
-$nextName = fgets($FH);
-}
-
-
-// $findMe = ',';
-// echo $fullNames[0] . '<br>';
-// echo strpos($fullNames[0], $findMe) . '<br>';
-// echo substr($fullNames[0], 0, strpos($fullNames[0], $findMe));
-// exit();
-
-// Get all first names
-foreach($fullNames as $fullName) {
-  $startHere = strpos($fullName, ",") + 1;
-  $firstNames[] = trim(substr($fullName, $startHere));
-}
-
-// Get all last names
-foreach ($fullNames as $fullName) {
-  $stopHere = strpos($fullName, ",");
-  $lastNames[] = substr($fullName, 0, $stopHere);
-}
+$lastNames = loadLastNames($fullNames);
 
 // Get valid names
 for($i = 0; $i < sizeof($fullNames); $i++) {
@@ -46,6 +20,8 @@ for($i = 0; $i < sizeof($fullNames); $i++) {
   }
 }
 
+$mostCommonLast = commonLastName($validLastNames);
+$mostCommonFirst = commonFirstName($validFirstNames);
 // ~~~~~~~~~~~~ Display results ~~~~~~~~~~~~ //
 
 echo '<h1>Names - Results</h1>';
@@ -91,7 +67,13 @@ echo '<ul style="list-style-type:none">';
     foreach($uniqueValidFirstNames as $uniqueValidFirstNames) {
         echo "<li>$uniqueValidFirstNames</li>";
     }
-echo "</ul>"
+echo "</ul>";
+
+echo "<h2>The most common last Name is:</h2>";
+echo "$mostCommonLast";
+
+echo "<h2>The most common first Name is:</h2>";
+echo "$mostCommonFirst";
 
 
 
