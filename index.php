@@ -17,6 +17,7 @@ $lineNumber++;
 $nextName = fgets($FH);
 }
 
+
 // $findMe = ',';
 // echo $fullNames[0] . '<br>';
 // echo strpos($fullNames[0], $findMe) . '<br>';
@@ -25,24 +26,24 @@ $nextName = fgets($FH);
 
 // Get all first names
 foreach($fullNames as $fullName) {
-    $startHere = strpos($fullName, ",") + 1;
-    $firstNames[] = trim(substr($fullName, $startHere));
+  $startHere = strpos($fullName, ",") + 1;
+  $firstNames[] = trim(substr($fullName, $startHere));
 }
 
 // Get all last names
- foreach ($fullNames as $fullName) {
-     $stopHere = strpos($fullName, ",");
-     $lastNames[] = substr($fullName, 0, $stopHere);
- }
+foreach ($fullNames as $fullName) {
+  $stopHere = strpos($fullName, ",");
+  $lastNames[] = substr($fullName, 0, $stopHere);
+}
 
 // Get valid names
 for($i = 0; $i < sizeof($fullNames); $i++) {
-    // jam the first and last name toghether without a comma, then test for alpha-only characters
-    if(ctype_alpha($lastNames[$i].$firstNames[$i])) {
-        $validFirstNames[$i] = $firstNames[$i];
-        $validLastNames[$i] = $lastNames[$i];
-        $validFullNames[$i] = $validLastNames[$i] . ", " . $validFirstNames[$i];
-    }
+  // jam the first and last name toghether without a comma, then test for alpha-only characters
+  if(ctype_alpha($lastNames[$i].$firstNames[$i])) {
+    $validFirstNames[$i] = $firstNames[$i];
+    $validLastNames[$i] = $lastNames[$i];
+    $validFullNames[$i] = $validLastNames[$i] . ", " . $validFirstNames[$i];
+  }
 }
 
 // ~~~~~~~~~~~~ Display results ~~~~~~~~~~~~ //
@@ -72,6 +73,27 @@ echo '<ul style="list-style-type:none">';
     foreach($uniqueValidNames as $uniqueValidNames) {
         echo "<li>$uniqueValidNames</li>";
     }
+echo "</ul>";
+
+echo '<h2>Unique Last Names</h2>';
+$uniqueValidLastNames = (array_unique($validLastNames));
+echo ("<p>There are " . sizeof($uniqueValidLastNames) . " Unique Last names</p>");
+echo '<ul style="list-style-type:none">';    
+    foreach($uniqueValidLastNames as $uniqueValidLastNames) {
+        echo "<li>$uniqueValidLastNames</li>";
+    }
+echo "</ul>";
+
+echo '<h2>Unique First Names</h2>';
+$uniqueValidFirstNames = (array_unique($validFirstNames));
+echo ("<p>There are " . sizeof($uniqueValidFirstNames) . " Unique First names</p>");
+echo '<ul style="list-style-type:none">';    
+    foreach($uniqueValidFirstNames as $uniqueValidFirstNames) {
+        echo "<li>$uniqueValidFirstNames</li>";
+    }
+echo "</ul>"
+
+
 
 ?>
 
